@@ -1,0 +1,24 @@
+.venv/
+venv/
+media/
+staticfiles/
+core/settings/.env
+
+# __pycache__ ignor
+**/__pycache__/
+
+# ignor settings
+settings.py
+
+# ignor bd
+# db.sqlite3
+
+# ignor log files
+**.log
+
+#vite ignore
+frontend/node_modules
+frontend/dist
+frontend/dist-ssr
+frontend/*.local
+frontend/exemple
