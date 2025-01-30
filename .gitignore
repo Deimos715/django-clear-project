@@ -1,24 +1,27 @@
-.venv/
-venv/
-media/
-staticfiles/
-core/settings/.env
+#backend
+# ignor folder
+backend/.venv/
+backend/media/
+backend/staticfiles/
+backend/core/settings/.env
+backend/.idea/
 
 # __pycache__ ignor
 **/__pycache__/
 
-# ignor settings
-settings.py
-
 # ignor bd
-# db.sqlite3
+backend/db.sqlite3
 
 # ignor log files
 **.log
 
-#vite ignore
-frontend/node_modules
-frontend/dist
-frontend/dist-ssr
-frontend/*.local
-frontend/exemple
+# ignor settings
+backend/settings.py
+
+# ignor log files
+**.log
+
+#frontend
+# ignor folder
+frontend/node_modules/
+frontend/dist/

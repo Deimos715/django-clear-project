@@ -27,8 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # user apps
-    'main.apps.MainConfig',
-    'seo.apps.SeoConfig',
+    'src.main.apps.MainConfig',
+    'src.seo.apps.SeoConfig',
 
     # Other apps
 

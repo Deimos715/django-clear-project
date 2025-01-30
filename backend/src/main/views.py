@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from seo.models import MetaTag, Title
+from src.seo.models import MetaTag, Title
 
 def index(request):
     current_url = request.path
