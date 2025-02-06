@@ -33,15 +33,15 @@ export default defineConfig({
             return 'assets/fonts/[name][extname]';
           }
           if (/css/i.test(extType)) {
-            return 'assets/css/style.min.css';
+            return 'assets/css/[name]-[hash].min.css';
           }
           if (/png|jpe?g|gif|svg|webp/i.test(extType)) {
             return 'assets/img/[name][extname]';
           }
           return 'assets/img/[name]-[hash][extname]';
         },
-        chunkFileNames: 'assets/js/main.js', //Для 2-х и более страниц
-        // entryFileNames: 'assets/js/main.js', //Для одной страницы
+        chunkFileNames: 'assets/js/[name]-[hash].js', //Для 2-х и более страниц
+        // entryFileNames: 'assets/js/[name]-[hash].js', //Для одной страницы
       }
     }
   },

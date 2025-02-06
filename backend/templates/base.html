@@ -9,38 +9,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- Meta -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/open_graph_preview.png' %}">
-        <meta property="og:image:secure_url" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/open_graph_preview.png' %}"/>
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
-        <meta property="og:image:alt" content="Чистый шаблон"/>
-        <meta property="og:image:type" content="image/png"/>
-        
-        {% block metatags %}
-        {% endblock %}
-
-
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
+        <!-- MetaTags -->
+        {% block metatags %}{% endblock %}
 
-        <!-- canonical -->
-        <link rel="canonical" href="https://webdevlabs.ru{{ request.path }}">
+        <!-- Канонический url -->
+        <link rel="canonical" href="https://example.ru{{ request.path }}">
 
         <!-- favicon -->
         <link rel="icon" sizes="16x16" href="{% static 'img/favicon.png' %}">
 
         <!-- Style -->
-        <script type="module" crossorigin src="{% static '/js/main.js' %}"></script>
-        <link rel="stylesheet" crossorigin href="{% static '/css/style.min.css' %}">
+        
+        <link rel="stylesheet" crossorigin href="{% static '/css/main-zsyuTBDG.min.css' %}">
     </head>
     
     <body>
-        {% include "includes/header.html" %}
 
         {% block content %}
         {% endblock %}
 
         {% include "includes/footer.html" %}
+
+        <!-- JS -->
+        <script type="module" crossorigin src="{% static '/js/main-BRCQH7rf.js' %}"></script>
     </body>
 </html>
