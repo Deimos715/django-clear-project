@@ -1,0 +1,11 @@
+{% extends "admin/submit_line.html" %}
+{% load i18n admin_urls %}
+
+{% block submit-row %}
+
+{{ block.super }}
+
+    {% if not show_close and adminform.model_admin.show_close_button %}
+        <a href="{% url opts|admin_urlname:'changelist' %}" class="closelink">{% translate 'Закрыть без сохранения' %}</a>
+    {% endif %}
+{% endblock %}

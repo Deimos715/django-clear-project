@@ -1,0 +1,109 @@
+/* admin css */
+#header {
+    background: #033c69;
+    color: #fff;
+}
+
+#branding h1 {
+    color: #fff;
+    margin: 0 0 8px;
+    line-height: 1.2;
+    font-size: 1.5rem;
+}
+
+div.breadcrumbs {
+    background: #033c69;
+    padding: 10px 40px;
+    border: none;
+    color: #fff;
+    text-align: left;
+}
+
+.login .submit-row {
+    /* padding: 0px !important; */
+    text-align: left !important;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #54c1c4;
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active,
+.button:focus, input[type=submit]:focus, input[type=button]:focus,
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #4aa6a9;
+}
+
+.my-submit input {
+    width: 100%;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: #033c69;
+}
+
+input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #033c69;
+}
+
+input[type=submit]:active, input[type=button]:active, .submit-row input:active, a.button:active,
+input[type=submit]:focus, input[type=button]:focus, .submit-row input:focus, a.button:focus,
+input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+    background: #158cf9;
+}
+
+.theme-toggle svg.theme-icon-when-auto, .theme-toggle svg.theme-icon-when-dark, .theme-toggle svg.theme-icon-when-light {
+    fill: #f7f7f7;
+    color: #033c69;
+}
+
+
+/* hide filter admin panel css start*/
+#changelist-filter > h2::after {
+    content: '   \00BB';
+    font-size: 19px;
+    color: rgba(10, 39, 44, .9);
+}
+    
+#changelist-filter > h2 {
+    cursor: pointer;
+}
+    
+td.field-get_address {
+    width: 300px !important;
+    display: block;
+}
+
+#changelist-filter.toge > h2::after {
+    content: '   \00AB';
+}
+
+#changelist-filter.toge {
+    background: none;
+    position: absolute !important;
+    right: 40px !important;
+}
+/* hide filter admin panel css end*/
+
+
+/* media admin style start */
+@media (max-width: 1024px) {
+    #changelist-filter.toge {
+        right: 30px !important;
+    }
+}
+
+@media (max-width: 960px) {
+    #changelist-filter.toge {
+        margin: 55px 0;
+    }
+}
+
+@media (max-width: 767px) {
+    #changelist-filter.toge {
+        right: 15px !important;
+    }
+}
+/* media admin style end */

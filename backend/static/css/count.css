@@ -1,0 +1,31 @@
+/* count css */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.flex-container .char-count {
+    width: 100%;
+    margin-top: 5px;
+}
+
+
+#id_description-char-count, #id_keywords-char-count, #id_og_title-char-count,
+#id_og_description-char-count, #id_title_page-char-count {
+    font-size: 14px;
+    font-weight: 500;
+    color: #FF4136;
+    display: block;
+    margin-left: 179px;
+}
+
+
+@media (max-width: 1202px) {
+    #id_description-char-count, #id_keywords-char-count, #id_og_title-char-count,
+    #id_og_description-char-count, #id_title_page-char-count {
+        margin-left: 0;
+    }
+}

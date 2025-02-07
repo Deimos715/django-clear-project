@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block branding %}
+    <h1 id="head">WebDevLabs - Администрирование</h1>
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+    <link rel="icon" href="{% static 'img/favicon.svg' %}">
+    <link href="{% static '/css/adminstyle.css' %}" rel="stylesheet">
+    <script src="{% static 'js/admin.js' %}"></script>
+{% endblock %}

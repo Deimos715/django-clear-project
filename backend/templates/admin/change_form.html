@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block content %}
+  {{ block.super }}
+    <link href="{% static '/css/count.css' %}" rel="stylesheet">
+    <script src="{% static 'js/count.js' %}"></script>
+
+{% endblock %}
