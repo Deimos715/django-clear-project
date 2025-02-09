@@ -1,5 +1,0 @@
-asgiref==3.8.1
-Django==5.1.3
-django-robots==6.1
-python-dotenv==1.0.1
-sqlparse==0.5.1
