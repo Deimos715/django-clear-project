@@ -2,36 +2,37 @@
 {{ '<' }}{{ '!DOCTYPE html>' }}
 <html lang="ru">
     <head>
-        <!-- Title -->
+        {# Title #}
         <title>{% block title %}{% endblock %}</title>
 
-        <!-- Meta -->
+        {# Meta #}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-        <!-- MetaTags -->
+        {# MetaTags #}
         {% block metatags %}{% endblock %}
 
-        <!-- Канонический url -->
+        {# Канонический url #}
         <link rel="canonical" href="https://example.ru{{ request.path }}">
 
-        <!-- favicon -->
+        {# favicon #}
         <link rel="icon" sizes="16x16" href="{% static 'img/favicon.png' %}">
 
-        <!-- Style -->
-        
-        <link rel="stylesheet" crossorigin href="{% static '/css/main-zsyuTBDG.min.css' %}">
+        {# Style #}
+        <link rel="stylesheet" crossorigin href="{% static '/css/style-dda7f980ab.min.css' %}">
     </head>
     
     <body>
 
+        {% include "includes/header.html" %}
+        
         {% block content %}
         {% endblock %}
 
         {% include "includes/footer.html" %}
 
-        <!-- JS -->
-        <script type="module" crossorigin src="{% static '/js/main-BRCQH7rf.js' %}"></script>
+        {# JS #}
+        <script type="module" crossorigin src="{% static '/js/main-357acdf365.min.js' %}"></script>
     </body>
 </html>

@@ -1,0 +1,70 @@
+@use 'variables' as *;
+
+/* -----------------------------------------------
+				CSS Styles 
+--------------------------------------------------
+
+    Template Name: 
+    
+--------------------------------------------------
+
+Table of Content
+
+    - Global
+
+
+
+----------------------------------- */
+
+/* -----------------------------------
+		Global
+----------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: $bg-color;
+    font-family: $font-body;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.container {
+    max-width: 1220px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
+/* -----------------------------------
+		Header
+----------------------------------- */
+
+/* -----------------------------------
+		Main
+----------------------------------- */
+
+/* -----------------------------------
+		Footer
+----------------------------------- */
+
+

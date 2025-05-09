@@ -30,8 +30,8 @@ class MetaTag(models.Model):
     og_type = models.CharField(max_length=12, choices=TYPE_CHOICES, default='website', verbose_name='Og:type')
     og_title = models.CharField(max_length=60, verbose_name='Og:title (максимум 60 символов)')
     og_description = models.TextField(max_length=190, verbose_name='Og:description (максимум 190 символов)')
-    og_url = models.CharField(max_length=30, default='https://webdevlabs.ru', verbose_name='Og:url')
-    og_site_name = models.CharField(max_length=120, default='WebDevLabs - Разработка современных сайтов, уникального дизайна, SEO-продвижению и создание PBN сайтов под ключ', verbose_name='Og:site_name')
+    og_url = models.CharField(max_length=30, default='https://example.ru', verbose_name='Og:url')
+    og_site_name = models.CharField(max_length=120, default='og site name', verbose_name='Og:site_name')
     og_locale = models.CharField(max_length=30, choices=LOCALE_CHOICES, default='ru_RU', verbose_name='Og:locale')
     url = models.CharField(max_length=30, unique=True, blank=True, null=True,
                         verbose_name='Адрес страницы (не заполняется для детальных страниц)')
