@@ -250,11 +250,14 @@ function styles() {
           "global-builtin",
           "import",
         ], // Игнорирование предупреждений
+      }).on('error', function (err) {
+        console.error('SCSS compile error:\n', err.message);
+        this.emit('end'); // отслеживание ошибок
       })
     )
     .pipe(autoprefixer({ overrideBrowserslist: ["last 10 version"] }))
     .pipe(concat("style.min.css"))
-    .pipe(cleanCSS())
+    // .pipe(cleanCSS()) // можно убрать сжатие в режиме dev
     .pipe(replace("../webfonts/", "../fonts/")) // Замена путей для FontAwesome
     .pipe(dest("app/css"))
     .pipe(browserSync.stream());
