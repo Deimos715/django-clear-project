@@ -33,26 +33,46 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    background-color: $bg-color;
-    font-family: $font-body;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.2;
-}
-
 .container {
     max-width: 1220px;
     padding: 0 10px;
     margin: 0 auto;
 }
 
-button {
-    background-color: transparent;
-    border: none;
-    font-family: inherit;
-    cursor: pointer;
+.header-section {
+    background-color: #F0F0F0;
+
+    &__nav-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 69px;
+        align-items: center;
+    }
 }
+
+.nav-menu {
+    &__list {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__list-item {
+        margin-right: 64px;
+        font-size: 18px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+// button {
+//     background-color: transparent;
+//     border: none;
+//     font-family: inherit;
+//     cursor: pointer;
+// }
 
 
 /* -----------------------------------
