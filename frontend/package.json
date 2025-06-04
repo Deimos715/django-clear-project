@@ -10,13 +10,13 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@babel/core": "^7.27.1",
+        "@babel/core": "^7.27.4",
         "@babel/preset-env": "^7.27.2",
         "@fortawesome/fontawesome-free": "^6.7.2",
         "babel-loader": "^10.0.0",
         "bootstrap": "^5.3.6",
         "browser-sync": "^3.0.4",
-        "gulp": "^5.0.0",
+        "gulp": "^5.0.1",
         "gulp-autoprefixer": "^9.0.0",
         "gulp-avif": "^1.1.1",
         "gulp-clean": "^0.4.0",
@@ -36,8 +36,8 @@
         "gulp-uglify": "^3.0.2",
         "gulp-webp": "^5.0.0",
         "jquery": "^3.7.1",
-        "sass": "^1.87.0",
-        "webpack": "^5.99.8",
+        "sass": "^1.89.1",
+        "webpack": "^5.99.9",
         "webpack-stream": "^7.0.0"
     }
 }
