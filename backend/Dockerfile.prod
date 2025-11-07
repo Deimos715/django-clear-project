@@ -15,13 +15,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Копируем проект
 COPY . /app/
 
-# Копируем статические файлы в контейнер
-RUN mkdir -p /app/static && \
-    python manage.py collectstatic --noinput
-
 # Переменные окружения
 ENV PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE=core.settings.prod
 
 # Команда для запуска
-CMD ["sh", "-c", "python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn core.wsgi:application --bind 0.0.0.0:8000"]
