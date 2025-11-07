@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  web_prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: django_prod_app # изменить для другого проекта
+    volumes:
+      - .:/app
+    ports:
+      - "8080:80"  # Nginx будет слушать на порту 8080, наружный порт/внутренний порт
+    env_file:
+      - core/settings/.env # рекомендуется указывать .env.prod
+    depends_on:
+      - db_prod
+    networks:
+      - prod_network
+
+  db_prod:
+    image: postgres:17
+    container_name: postgres_prod # изменить postgres_dev для другого проекта
+    env_file:
+      - core/settings/.env # рекомендуется указывать .env.prod
+    ports:
+      - "5439:5432" # наружный порт/внутренний порт, для другого проекта меняем наружный порт на не занятый
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data # изменить postgres_prod для другого проекта
+    networks:
+      - prod_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_prod
+    volumes:
+      - ./nginx/prod.conf:/etc/nginx/nginx.conf
+      - ./staticfiles:/app/staticfiles
+    ports:
+      - "8081:80"  # Nginx будет слушать на порту 80
+    depends_on:
+      - web_prod
+    networks:
+      - prod_network
+
+volumes:
+  postgres_prod_data: # изменить postgres_prod для другого проекта
+
+networks:
+  prod_network:
+    driver: bridge
