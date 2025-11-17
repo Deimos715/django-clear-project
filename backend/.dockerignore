@@ -1,0 +1,32 @@
+# Виртуальное окружение
+.venv/
+env/
+
+# Гит
+.git/
+.gitignore
+
+# IDE/редакторы
+.vscode/
+.idea/
+
+# Логи/кэш
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+# Docker
+docker-compose.dev.yml
+docker-compose.prod.yml
+Dockerfile.dev
+Dockerfile.prod
+
+# Секретные данные
+*.env
+*.env.dev
+*.env.prod
+
+# Django
+staticfiles/
+media/

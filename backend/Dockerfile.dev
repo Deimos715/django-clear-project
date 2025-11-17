@@ -1,5 +1,17 @@
 FROM python:3.12.7
 
+# Добавляем поддержку русской локали и часового пояса
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends locales tzdata \
+    && sed -i 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen \
+    && sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen \
+    && rm -rf /var/lib/apt/lists/*
+ENV LANG='ru_RU.UTF-8' \
+    LC_ALL='ru_RU.UTF-8' \
+    TZ='Europe/Moscow'
+
 # Устанавливаем системные зависимости
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc && \

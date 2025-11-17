@@ -2,52 +2,59 @@ version: '3.9'
 
 services:
   web_prod:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-    container_name: django_prod_app # изменить для другого проекта
-    ports:
-      - "8080:80"  # Nginx будет слушать на порту 8080, наружный порт/внутренний порт
+    image: ghcr.io/deimos715/yuor_repository:latest # репозиторий
+    container_name: django_prod_apps # изменить для другого проекта
+    environment: 
+      DJANGO_ENV: prod # настройки для prod
     env_file:
-      - core/settings/.env # рекомендуется указывать .env.prod
+      - core/settings/.env.prod # рекомендуется указывать .env.prod
+    command: >
+      sh -c "python manage.py migrate && python manage.py collectstatic --noinput &&
+            gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 60"
+
+    volumes:
+      - /var/www/userlab/data/webdevlabs/staticfiles:/app/staticfiles
+      - /var/www/userlab/data/webdevlabs/media:/app/media
+    expose:
+      - '8000'
+    ports:
+      - '127.0.0.1:8001:8000'   # внешний Nginx (FastPanel) проксирует на этот порт (если два сайта и более, указываем порт по порядку 8002,...)
     depends_on:
       - db_prod
     networks:
       - prod_network
-    volumes:
-      - staticfiles_data:/app/staticfiles
-      - media_data:/app/media
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:8000/health || exit 1']
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   db_prod:
     image: postgres:17
     container_name: postgres_prod # изменить postgres_dev для другого проекта
     env_file:
-      - core/settings/.env # рекомендуется указывать .env.prod
-    ports:
-      - "5439:5432" # наружный порт/внутренний порт, для другого проекта меняем наружный порт на не занятый
+      - core/settings/.env.prod # рекомендуется указывать .env.prod
     volumes:
       - postgres_prod_data:/var/lib/postgresql/data # изменить postgres_prod для другого проекта
     networks:
       - prod_network
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -h 127.0.0.1']
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx_prod
-    volumes:
-      - ./nginx/prod.conf:/etc/nginx/nginx.conf
-      - staticfiles_data:/app/staticfiles
-      - media_data:/app/media
-    ports:
-      - "8081:80"  # Nginx будет слушать на порту 80
-    depends_on:
-      - web_prod
-    networks:
-      - prod_network
+  # redis_prod:
+  #   image: redis:7-alpine
+  #   container_name: redis_prod
+  #   networks:
+  #     - prod_network
+  #   restart: unless-stopped
 
 volumes:
   postgres_prod_data: # изменить postgres_prod для другого проекта
-  staticfiles_data:
-  media_data:
 
 networks:
   prod_network:

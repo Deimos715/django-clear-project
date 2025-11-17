@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: django_dev_app # изменить для другого проекта
+    container_name: django_dev # изменить для другого проекта
     command: >
       sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
@@ -13,7 +13,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - core/settings/.env # рекомендуется указывать .env.dev
+      - core/settings/.env.dev # рекомендуется указывать .env.dev
     depends_on:
       - db_dev
 
@@ -21,9 +21,9 @@ services:
     image: postgres:17
     container_name: postgres_dev # изменить postgres_dev для другого проекта
     env_file:
-      - core/settings/.env # рекомендуется указывать .env.dev
+      - core/settings/.env.dev # рекомендуется указывать .env.dev
     ports:
-      - "5438:5432" # наружный порт/внутренний порт, для другого проекта меняем наружный порт на не занятый
+      - "5439:5432" # наружный порт/внутренний порт, для другого проекта меняем наружный порт на не занятый
     volumes:
       - postgres_dev_data:/var/lib/postgresql/data # изменить postgres_dev для другого проекта
 

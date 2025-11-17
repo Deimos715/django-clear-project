@@ -1,23 +1,35 @@
+# более компактный образ
 FROM python:3.12.7
 
-# Устанавливаем системные зависимости
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Добавляем поддержку русской локали и часового пояса
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends locales tzdata \
+    && sed -i 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen \
+    && sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen \
+    && rm -rf /var/lib/apt/lists/*
+ENV LANG='ru_RU.UTF-8' \
+    LC_ALL='ru_RU.UTF-8' \
+    TZ='Europe/Moscow'
 
-# Устанавливаем рабочую директорию
-WORKDIR /app
-
-# Устанавливаем зависимости
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Копируем проект
-COPY . /app/
-
-# Переменные окружения
-ENV PYTHONUNBUFFERED=1 \
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE=core.settings.prod
 
-# Команда для запуска
-CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn core.wsgi:application --bind 0.0.0.0:8000"]
+# системные зависимости
+RUN apt-get update && apt-get install -y --no-install-recommends     build-essential gcc libpq-dev curl wget  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# зависимости проекта
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# код проекта
+COPY . /app/
+
+# порт gunicorn
+EXPOSE 8000
+
+# CMD задаётся в docker-compose (migrate + collectstatic + gunicorn)

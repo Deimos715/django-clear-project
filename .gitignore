@@ -4,6 +4,8 @@ backend/.venv/
 backend/media/
 backend/staticfiles/
 backend/core/settings/.env
+backend/core/settings/.env.dev
+backend/core/settings/.env.prod
 backend/.idea/
 
 # __pycache__ ignor
@@ -16,7 +18,8 @@ backend/db.sqlite3
 **.log
 
 # ignor settings
-backend/settings.py
+backend/settings_dev.py
+backend/settings_prod.py
 
 # ignor log files
 **.log
