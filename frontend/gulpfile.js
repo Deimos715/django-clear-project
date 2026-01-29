@@ -85,44 +85,54 @@ function copyFontAwesomeBuild() {
 // Обработка изображений
 // Dev
 function images() {
-  // Обрабатываем все изображения (кроме SVG) и конвертируем в WebP
-  src(["app/images/src/*.*", "!app/images/src/*.svg"], { encoding: false })
-    .pipe(newer("app/images"))
+  const imgSrc = ["app/images/src/**/*.*", "!app/images/src/**/*.svg"]; // Обрабатываем все изображения (кроме SVG)
+  const imgAll = "app/images/src/**/*.*";
+  const destPath = "app/images";
+  const baseDir = "app/images/src";
+
+  // WebP
+  src(imgSrc, { base: baseDir, encoding: false })
+    .pipe(newer(destPath))
     .pipe(webp())
-    .pipe(dest("app/images"));
+    .pipe(dest(destPath));
 
-  // Обрабатываем все изображения (кроме SVG) и конвертируем в AVIF
-  src(["app/images/src/*.*", "!app/images/src/*.svg"], { encoding: false })
-    .pipe(newer("app/images"))
+  // AVIF
+  src(imgSrc, { base: baseDir, encoding: false })
+    .pipe(newer(destPath))
     .pipe(avif({ quality: 50 }))
-    .pipe(dest("app/images"));
+    .pipe(dest(destPath));
 
-  // Обрабатываем все изображения (включая SVG) с использованием imagemin
-  return src("app/images/src/*.*", { encoding: false })
-    .pipe(newer("app/images"))
+  // Imagemin (все файлы, включая SVG)
+  return src(imgAll, { base: baseDir, encoding: false })
+    .pipe(newer(destPath))
     .pipe(imagemin())
-    .pipe(dest("app/images"));
+    .pipe(dest(destPath));
 }
 
 // Prod
 function imagesBuild() {
-  // Обрабатываем все изображения (кроме SVG) и конвертируем в WebP
-  src(["app/images/src/*.*", "!app/images/src/*.svg"], { encoding: false })
-    .pipe(newer("dist/images"))
+  const imgSrc = ["app/images/src/**/*.*", "!app/images/src/**/*.svg"]; // Обрабатываем все изображения (кроме SVG)
+  const imgAll = "app/images/src/**/*.*";
+  const destPath = "dist/images";
+  const baseDir = "app/images/src";
+
+  // WebP
+  src(imgSrc, { base: baseDir, encoding: false })
+    .pipe(newer(destPath))
     .pipe(webp())
-    .pipe(dest("dist/images"));
+    .pipe(dest(destPath));
 
-  // Обрабатываем все изображения (кроме SVG) и конвертируем в AVIF
-  src(["app/images/src/*.*", "!app/images/src/*.svg"], { encoding: false })
-    .pipe(newer("dist/images"))
+  // AVIF
+  src(imgSrc, { base: baseDir, encoding: false })
+    .pipe(newer(destPath))
     .pipe(avif({ quality: 50 }))
-    .pipe(dest("dist/images"));
+    .pipe(dest(destPath));
 
-  // Обрабатываем все изображения (включая SVG) с использованием imagemin
-  return src("app/images/src/*.*", { encoding: false })
-    .pipe(newer("dist/images"))
+  // Imagemin (все файлы, включая SVG)
+  return src(imgAll, { base: baseDir, encoding: false })
+    .pipe(newer(destPath))
     .pipe(imagemin())
-    .pipe(dest("dist/images"));
+    .pipe(dest(destPath));
 }
 
 // Спрайт
@@ -173,12 +183,39 @@ function scripts() {
               "window.jQuery": "jquery",
             }), // Включение Jquery глобально
           ],
+          // Отслеживание ошибок, сборка не падает
+          stats: {
+            errorDetails: true,  // Добавлено для детализации ошибок
+            modules: false,
+            chunks: false
+          }
         },
-        webpack
-      )
-    )
+        webpack, function (err, stats) {
+          if (err) {
+            console.error('Webpack error:', err.message);
+            this.emit('end');
+          }
+          if (stats?.hasErrors()) {
+            stats.toJson('errors-only').errors.forEach(error => {
+              console.error(`Error in ${error.moduleName || 'unknown'}:`);
+              console.error(error.message.split('\n')[0]);
+              if (error.loc) {
+                console.error(`At line ${error.loc.line}, column ${error.loc.column}`);
+              }
+            });
+            this.emit('end');
+          }
+        }))
+    .on('error', function (err) {
+      console.error('Scripts error:', err.message);
+      this.emit('end');
+    })
     .pipe(concat("main.min.js"))
-    .pipe(uglify())
+    .pipe(uglify().on('error', function (err) {
+      console.error('Uglify error:', err.message);
+      if (err.line) console.error(`At line ${err.line}, column ${err.col}`);
+      this.emit('end');
+    }))
     .pipe(dest("app/js"))
     .pipe(browserSync.stream());
 }
