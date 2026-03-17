@@ -16,6 +16,10 @@ __pycache__/
 *.pyo
 *.log
 
+# Локальная БД
+*.sqlite3
+*.sqlite3-journal
+
 # Docker
 docker-compose.dev.yml
 docker-compose.prod.yml
