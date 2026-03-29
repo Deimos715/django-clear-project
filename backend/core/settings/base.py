@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'src.main.apps.MainConfig',
     'src.seo.apps.SeoConfig',
     'src.account.apps.AccountConfig',
+    'src.lk.apps.LkConfig',
 
     # Other apps
     'rest_framework',
@@ -207,7 +208,7 @@ LOGIN_URL = 'account:login'
 # если в запросе не был передан параметр next.
 # Используется, например, во встроенном LoginView или при ручном redirect().
 # Пока на main:index
-LOGIN_REDIRECT_URL = 'account:profile'
+LOGIN_REDIRECT_URL = 'lk:profile'
 
 
 # Настройки для отправки почты

@@ -4,9 +4,6 @@ from . import views
 app_name = 'account'
 
 urlpatterns = [
-    # Профиль
-    path('profile/', views.profile, name='profile'),
-
     # Вход
     path('login/', views.user_login, name='login'), # Доступен всем
     

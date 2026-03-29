@@ -156,11 +156,6 @@ def user_logout(request):
     return response
 
 
-@login_required
-def profile(request):
-    return render(request, "account/profile.html")
-
-
 def registry(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)

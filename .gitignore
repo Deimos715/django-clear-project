@@ -31,3 +31,6 @@ frontend/dist/
 
 #fontawesome
 frontend/app/fonts/fa*
+
+# codex
+.codex
