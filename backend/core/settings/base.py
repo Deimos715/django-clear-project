@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -16,6 +17,18 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 SITE_ID = 1
 
 
+# CSRF домены
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
+]
+
+
+# Своя модель пользователя
+AUTH_USER_MODEL = 'account.CustomUser'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -29,8 +42,11 @@ INSTALLED_APPS = [
     # user apps
     'src.main.apps.MainConfig',
     'src.seo.apps.SeoConfig',
+    'src.account.apps.AccountConfig',
 
     # Other apps
+    'rest_framework',
+    'rest_framework_simplejwt',
 
     # sitemaps
     'django.contrib.sites',
@@ -39,6 +55,36 @@ INSTALLED_APPS = [
     # robots
     'robots',
 ]
+
+
+# Сессии/сообщения не в БД (только cookie)
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+
+# JWT настройки
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'LEEWAY': 30,
+}
+
+
+# Cookies
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+
+# AUTHENTICATION_BACKENDS определяет список бэкендов аутентификации, которые Django будет использовать
+# 'django.contrib.auth.backends.ModelBackend' — стандартный бэкенд Django,
+# который проверяет учетные данные (email/username + пароль) через модель пользователя,
+# а также обрабатывает права доступа (is_active, is_staff, is_superuser, группы, разрешения).
+# Если в списке оставить только этот бэкенд, вход возможен только через пользователей,
+# хранящихся в базе Django, без сторонних систем авторизации.
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,17 +142,25 @@ DATABASES = {
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
+    # Стандартные валидаторы паролей Django отключены, так как используются кастомные валидаторы
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+    # Отключен, так как используется кастомный валидатор
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+
+    # Кастомные валидаторы паролей
+    {
+        'NAME': 'src.account.validators.CustomMinimumLengthValidator',
+        'OPTIONS': {'min_length': 8}
     },
 ]
 
@@ -141,3 +195,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# URL-имя (name из urls.py), на который Django будет перенаправлять
+# незалогиненного пользователя при попытке доступа к @login_required вьюхе.
+# Django автоматически добавит параметр ?next=... для возврата после входа.
+LOGIN_URL = 'account:login'
+
+
+# URL-имя, куда Django отправит пользователя после успешного входа,
+# если в запросе не был передан параметр next.
+# Используется, например, во встроенном LoginView или при ручном redirect().
+# Пока на main:index
+LOGIN_REDIRECT_URL = 'account:profile'
+
+
+# Настройки для отправки почты
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.mail.ru')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 465))
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'True') == 'True'
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'False') == 'True'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_TIMEOUT = 20

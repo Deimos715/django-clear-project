@@ -1,8 +1,16 @@
 asgiref==3.11.0
+certifi==2026.2.25
+charset-normalizer==3.4.6
 Django==6.0.3
 django-robots==6.1
+djangorestframework==3.17.1
+djangorestframework_simplejwt==5.5.1
 gunicorn==23.0.0
+idna==3.11
 packaging==25.0
 psycopg2==2.9.11
+PyJWT==2.12.1
 python-dotenv==1.0.1
+requests==2.33.0
 sqlparse==0.5.5
+urllib3==2.6.3

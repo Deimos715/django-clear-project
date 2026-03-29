@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Account{% endblock %}</title>
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 520px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            margin: 0 0 16px;
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
+
+        p {
+            margin: 0 0 12px;
+            line-height: 1.5;
+        }
+
+        form {
+            display: grid;
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font: inherit;
+        }
+
+        button,
+        .button-link {
+            background: #1f2937;
+            color: #ffffff;
+            border-color: #1f2937;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .button-link.secondary,
+        button.secondary {
+            background: #ffffff;
+            color: #1f2937;
+            border-color: #d1d5db;
+        }
+
+        .actions {
+            display: grid;
+            gap: 10px;
+        }
+
+        .links {
+            display: grid;
+            gap: 8px;
+        }
+
+        .links a {
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .field-errors,
+        .form-errors {
+            margin: 6px 0 0;
+            padding: 0;
+            list-style: none;
+            color: #b91c1c;
+            font-size: 0.9rem;
+        }
+
+        .messages {
+            margin: 0 0 14px;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+
+        .messages li {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .messages li.error {
+            border-color: #fecaca;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .messages li.success {
+            border-color: #bbf7d0;
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        .messages li.info {
+            border-color: #bfdbfe;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+<main class="page">
+    <section class="card">
+        <h1>{% block page_title %}{% endblock %}</h1>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags|default:'' }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </section>
+</main>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends "account/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+{% block page_title %}Регистрация{% endblock %}
+
+{% block content %}
+    <p>Создайте аккаунт и подтвердите email для активации.</p>
+
+    {% if form.non_field_errors %}
+        <ul class="form-errors">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% for field in form.visible_fields %}
+            <div>
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <ul class="field-errors">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="actions">
+            <button type="submit">Зарегистрироваться</button>
+            <a class="button-link secondary" href="{% url 'account:login' %}">У меня уже есть аккаунт</a>
+        </div>
+    </form>
+{% endblock %}

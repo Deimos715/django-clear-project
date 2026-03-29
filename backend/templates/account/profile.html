@@ -1,0 +1,13 @@
+{% extends "account/base.html" %}
+
+{% block title %}Профиль{% endblock %}
+{% block page_title %}Профиль{% endblock %}
+
+{% block content %}
+    <p>Личная страница пользователя.</p>
+
+    <div class="actions">
+        <a class="button-link" href="{% url 'account:password_change' %}">Сменить пароль</a>
+        <a class="button-link secondary" href="{% url 'account:logout' %}">Выйти</a>
+    </div>
+{% endblock %}

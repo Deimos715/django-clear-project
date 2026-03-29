@@ -1,0 +1,11 @@
+{% extends "account/base.html" %}
+
+{% block title %}Email подтвержден{% endblock %}
+{% block page_title %}Активация завершена{% endblock %}
+
+{% block content %}
+    <p>Email успешно подтверждён. Теперь можно войти в аккаунт.</p>
+    <div class="actions">
+        <a class="button-link" href="{% url 'account:login' %}">Перейти ко входу</a>
+    </div>
+{% endblock %}

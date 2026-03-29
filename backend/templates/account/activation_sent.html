@@ -1,0 +1,29 @@
+{% extends "account/base.html" %}
+
+{% block title %}Письмо отправлено{% endblock %}
+{% block page_title %}Подтвердите email{% endblock %}
+
+{% block content %}
+    <p>
+        Мы отправили письмо с ссылкой активации{% if masked_email %} на {{ masked_email }}{% endif %}.
+        Перейдите по ссылке из письма, чтобы активировать аккаунт.
+    </p>
+
+    {% if can_change_email %}
+        <form method="post" action="{% url 'account:activation_email_change' %}" novalidate>
+            {% csrf_token %}
+            <div>
+                <label for="{{ change_email_form.email.id_for_label }}">{{ change_email_form.email.label }}</label>
+                {{ change_email_form.email }}
+                {% if change_email_form.email.errors %}
+                    <ul class="field-errors">{% for error in change_email_form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
+            <button type="submit">Изменить email и отправить письмо снова</button>
+        </form>
+    {% endif %}
+
+    <div class="actions" style="margin-top: 14px;">
+        <a class="button-link secondary" href="{% url 'account:login' %}">Перейти ко входу</a>
+    </div>
+{% endblock %}
