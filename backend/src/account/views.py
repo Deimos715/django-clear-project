@@ -157,6 +157,9 @@ def user_logout(request):
 
 
 def registry(request):
+    if request.user.is_authenticated:
+        return redirect(settings.LOGIN_REDIRECT_URL)
+    
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
