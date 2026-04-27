@@ -3,7 +3,8 @@ import sass from "gulp-sass";
 import * as sassCompiler from "sass";
 import concat from "gulp-concat";
 import uglify from "gulp-uglify";
-import browserSync from "browser-sync";
+import browserSyncLib from "browser-sync";
+const browserSync = browserSyncLib.create();
 import autoprefixer from "gulp-autoprefixer";
 import clean from "gulp-clean";
 import webp from "gulp-webp";
@@ -339,6 +340,7 @@ function watching() {
     server: {
       baseDir: "app/",
     },
+    ui: false,
   });
   watch(["app/scss/**/*.scss"], styles);
   watch(["app/images/src"], images);
